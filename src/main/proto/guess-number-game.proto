@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+
+import 'google/protobuf/empty.proto';
+
+option java_multiple_files = true;
+option java_package = "org.example.models";
+
+message GuessRequest {
+  int32 guess = 1;
+}
+
+message GuessResponse {
+  int32 attempt = 1;
+  Result result = 2;
+}
+
+enum Result{
+  CORRECT = 0;
+  TOO_LOW = 1;
+  TOO_HIGH = 2;
+}
+
+service GuessNumber{
+  rpc makeGuess(stream GuessRequest) returns (stream GuessResponse);
+}
