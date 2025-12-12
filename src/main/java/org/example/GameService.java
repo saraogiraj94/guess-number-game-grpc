@@ -8,7 +8,7 @@ import org.example.models.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameService extends GuessNumberGrpc.GuessNumberImplBase {
 
@@ -24,7 +24,7 @@ public class GameService extends GuessNumberGrpc.GuessNumberImplBase {
 			public void onNext(GuessRequest guessRequest) {
 				//Check if the server has value to be guessed
 				if (expectedNumber == null) {
-					expectedNumber = new Random().nextInt(101);
+					expectedNumber = ThreadLocalRandom.current().nextInt(101);
 					log.info("Generated expectedNumber: {}", expectedNumber);
 				}
 
