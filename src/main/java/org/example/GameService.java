@@ -13,13 +13,15 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GameService extends GuessNumberGrpc.GuessNumberImplBase {
 
 	Logger log = LoggerFactory.getLogger(GameService.class);
-	private Integer expectedNumber;
-	private int attempts;
 
 	@Override
 	public StreamObserver<GuessRequest> makeGuess(StreamObserver<GuessResponse> responseObserver) {
 
-		var requestObserver = new StreamObserver<GuessRequest>() {
+		return new StreamObserver<GuessRequest>() {
+
+			private Integer expectedNumber;
+			private int attempts;
+
 			@Override
 			public void onNext(GuessRequest guessRequest) {
 				//Check if the server has value to be guessed
@@ -58,7 +60,5 @@ public class GameService extends GuessNumberGrpc.GuessNumberImplBase {
 				responseObserver.onCompleted();
 			}
 		};
-
-		return requestObserver;
 	}
 }
